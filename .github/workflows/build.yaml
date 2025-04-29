@@ -1,4 +1,4 @@
----
+n---
 name: CI/CD Pipeline
 on:
   push:
@@ -29,5 +29,5 @@ jobs:
           name: junit-test-results
           path: ./target/surefire-reports/*.xml
       - name: Run Delivery
-        run: ./delivery.sh
+        run: ./jenkins/scripts/deliver.sh
         
