@@ -1,0 +1,37 @@
+---
+name: CI/CD Pipeline
+on:
+  push:
+    branches:
+      - sanjeev-github-action
+    pull_request: null
+jobs:
+  job1: null
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: "17"
+          distribution: temurin
+      - name: Build the apps
+        run: mvn -B -DskipTests package --file pom.xml
+    job2:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Run tests
+          run: mvn test
+    job3:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Upload junit test results
+          if: success()
+          uses: actions/upload-artifact@v4
+          with:
+            name: junit-test-results
+            path: ./target/surefire-reports/*.xml
+        - name: Run Delivery
+          run: ./jenkins/scripts/deliver.sh
