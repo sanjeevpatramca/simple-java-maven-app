@@ -6,8 +6,7 @@ on:
       - sanjeev-github-action
     pull_request: null
 jobs:
-  job1: null
-  build:
+  job1:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
