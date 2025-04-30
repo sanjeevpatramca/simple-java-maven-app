@@ -21,8 +21,8 @@ jobs:
       - name: Upload artifact to enable deployment
         uses: actions/upload-artifact@v4
         with:
-          name: pom.xml
-          path: ./todo/build
+          name: build-artifact
+          path: ./dist
   Test_job2:
     needs: build_job1
     runs-on: ubuntu-latest
