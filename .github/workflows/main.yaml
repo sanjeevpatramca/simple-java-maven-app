@@ -6,7 +6,7 @@ on:
       - sanjeev-github-action
     pull_request: null
 jobs:
-  build_job1:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: CheckouT code
@@ -21,28 +21,24 @@ jobs:
       - name: Upload artifact to enable deployment
         uses: actions/upload-artifact@v4
         with:
-          name: pom.xml
-          path: ./dist
-  Test_job2:
-    needs: build_job1
+          name: build-jar
+          path: target/*.jar
+  Test:
+    needs: build
     runs-on: ubuntu-latest
     steps:
+      - run: mvn test 
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
-          name: pom.xml
-          path: ./download-artifact
-      - name: Run tests
-        run: mvn test
-  Run_job3:
-    needs: Test_job2
+          name: test-mvn
+          path: ./target/surefire-reports/*.xml
+      
+  Deliver:
+    needs: Test
     runs-on: ubuntu-latest
     steps:
-      - name: Upload junit test results
-        if: success()
-        uses: actions/upload-artifact@v4
-        with:
-          name: junit-test-results
-          path: ./target/surefire-reports/*.xml
-      - name: Run Delivery
-        run: ./jenkins/scripts/deliver.sh
+      - uses: actions/checkout@v2
+      - run: ls -la ./jenkins/scripts/  # List files to verify the script exists
+      - run: chmod +x ./jenkins/scripts/deliver.sh
+      - run: ./jenkins/scripts/deliver.sh
