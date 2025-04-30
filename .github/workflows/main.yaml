@@ -44,7 +44,7 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: test-mvn
-          path: target/build.jar
+          path: build.jar
       - run: ls -la ./jenkins/scripts/  # List files to verify the script exists
       - run: chmod +x ./jenkins/scripts/deliver.sh
       - run: ./jenkins/scripts/deliver.sh
