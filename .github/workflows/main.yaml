@@ -30,8 +30,8 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
-          name: pom.xml
-          path: ./todo/build
+          name: build-artifact
+          path: ./download-artifact
       - name: Run tests
         run: mvn test
   Run_job3:
