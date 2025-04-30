@@ -6,7 +6,7 @@ on:
       - sanjeev-github-action
     pull_request: null
 jobs:
-  job1:
+  build_job1:
     runs-on: ubuntu-latest
     steps:
       - name: CheckouT code
@@ -18,19 +18,18 @@ jobs:
           distribution: temurin
       - name: Build the apps
         run: mvn -B -DskipTests package --file pom.xml
-    job2:
-      runs-on: ubuntu-latest
-      steps:
-        - name: Run tests
-          run: mvn test
-    job3:
-      runs-on: ubuntu-latest
-      steps:
-        - name: Upload junit test results
-          if: success()
-          uses: actions/upload-artifact@v4
-          with:
-            name: junit-test-results
-            path: ./target/surefire-reports/*.xml
-        - name: Run Delivery
-          run: ./jenkins/scripts/deliver.sh
+  Test_job2:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run tests
+        run: mvn test
+  Run_job3:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Upload junit test results
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: junit-test-results
+          path: ./target/surefire-reports/*.xml
+      - name: Run Delivery
