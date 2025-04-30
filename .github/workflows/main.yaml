@@ -19,11 +19,13 @@ jobs:
       - name: Build the apps
         run: mvn -B -DskipTests package --file pom.xml
   Test_job2:
+    needs: build_job1
     runs-on: ubuntu-latest
     steps:
       - name: Run tests
         run: mvn test
   Run_job3:
+    needs: Test_job2
     runs-on: ubuntu-latest
     steps:
       - name: Upload junit test results
