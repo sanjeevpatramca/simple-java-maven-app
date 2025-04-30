@@ -18,10 +18,20 @@ jobs:
           distribution: temurin
       - name: Build the apps
         run: mvn -B -DskipTests package --file pom.xml
+      - name: Upload artifact to enable deployment
+        uses: actions/upload-artifact@v3
+        with:
+          name: poduction file
+          path: ./todo/build
   Test_job2:
     needs: build_job1
     runs-on: ubuntu-latest
     steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: poduction file
+          path: ./todo/build
       - name: Run tests
         run: mvn test
   Run_job3:
